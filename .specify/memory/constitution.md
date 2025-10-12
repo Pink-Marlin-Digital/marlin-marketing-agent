@@ -1,15 +1,15 @@
 <!--
 Sync Impact Report:
-Version change: 1.2.0 → 1.3.0
-Modified principles: Testing Standards (expanded with nock mocking requirements)
-Added sections: HTTP Request Mocking Standards
+Version change: 1.3.0 → 1.4.0
+Modified principles: Testing Standards (expanded with supertest port management requirements)
+Added sections: Test Port Management Standards
 Removed sections: N/A
 Templates requiring updates: 
   ✅ plan-template.md (updated for testing requirements)
   ✅ spec-template.md (updated for testing standards)
   ✅ tasks-template.md (updated for testing task types)
 Follow-up TODOs: None
-Amendment: Added comprehensive HTTP request mocking requirements using nock package
+Amendment: Added comprehensive test port management requirements using supertest package
 -->
 
 # Marlin Marketing Agent Constitution
@@ -53,6 +53,9 @@ Comprehensive test coverage MUST be maintained for all marketing functionality i
 ### HTTP Request Mocking Standards (NON-NEGOTIABLE)
 All tests MUST use the npm package `nock` to mock outbound HTTP requests to external services including OpenAI, email services, and other third-party APIs. Tests MUST NOT make real external API calls to prevent test failures due to service unavailability, rate limiting, or network issues. All mocked HTTP responses MUST be deterministic and consistent across test runs. The `nock` package MUST be configured to intercept all outbound requests during testing, ensuring tests produce consistent results regardless of external service availability. This prevents test errors such as "LLM service unavailable" and ensures reliable, fast test execution.
 
+### Test Port Management Standards (NON-NEGOTIABLE)
+All integration and API tests MUST use the npm package `supertest` to manage application ports and avoid port allocation conflicts. Tests MUST NOT manually start Express servers or bind to specific ports during testing. The `supertest` package MUST be used to create test instances of the Express application without starting actual HTTP servers, eliminating port conflicts in CI/CD environments and parallel test execution. This prevents test failures due to "address already in use" errors and ensures consistent test execution across different environments including GitHub Actions.
+
 ### Documentation Requirements
 All marketing APIs MUST be documented with comprehensive OpenAPI/Swagger specifications including examples and error responses. Postman collections MUST be maintained with test cases for all endpoints. Marketing workflows and campaign templates MUST be documented with clear usage instructions. All configuration options and environment variables MUST be documented. README files MUST provide clear setup and usage instructions for developers and users.
 
@@ -76,4 +79,4 @@ The Swagger documentation MUST comprehensively cover all error scenarios includi
 
 This constitution supersedes all other development practices. All pull requests and code reviews MUST verify compliance with these principles. Any violations of the core principles MUST be justified with clear reasoning. Use the project README.md for runtime development guidance and API documentation.
 
-**Version**: 1.3.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-12
+**Version**: 1.4.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-12
