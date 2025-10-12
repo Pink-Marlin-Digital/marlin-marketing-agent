@@ -75,6 +75,28 @@
 - What happens when [boundary condition]?
 - How does system handle [error scenario]?
 
+### API Testing Requirements
+
+<!--
+  ACTION REQUIRED: For any API endpoints in this feature, specify testing requirements.
+-->
+
+- **Postman Collection**: All new API endpoints MUST be added to the central Postman collection
+- **Test Coverage**: Each endpoint MUST have test cases covering success, failure, authentication, and validation scenarios
+- **Environment Testing**: Tests MUST be configured for dev/staging/production environments
+- **Deployment Validation**: Collection MUST be integrated into CI/CD pipeline
+
+### Documentation Requirements
+
+<!--
+  ACTION REQUIRED: For any API endpoints in this feature, specify documentation requirements.
+-->
+
+- **Swagger Documentation**: All new API endpoints MUST have comprehensive OpenAPI/Swagger documentation
+- **Example Quality**: Documentation MUST include realistic example requests and responses
+- **Error Coverage**: All error scenarios MUST be documented with examples and remediation steps
+- **Code Synchronization**: Documentation MUST be automatically generated and kept synchronized with implementation
+
 ## Requirements *(mandatory)*
 
 <!--

@@ -1,15 +1,15 @@
 <!--
 Sync Impact Report:
-Version change: 0.0.0 → 1.0.0
-Modified principles: N/A (initial creation)
-Added sections: All core principles, security requirements, development workflow, governance
+Version change: 1.0.0 → 1.1.0
+Modified principles: V. Error Handling & Validation (expanded), Documentation Requirements (expanded)
+Added sections: API Testing & Validation, Swagger Documentation Standards
 Removed sections: N/A
 Templates requiring updates: 
-  ✅ plan-template.md (updated for marketing agent principles)
-  ✅ spec-template.md (updated for marketing agent scope)
-  ✅ tasks-template.md (updated for marketing agent task types)
+  ✅ plan-template.md (updated for API testing requirements)
+  ✅ spec-template.md (updated for documentation standards)
+  ✅ tasks-template.md (updated for testing and documentation task types)
 Follow-up TODOs: None
-Amendment: Initial constitution creation for Marlin Marketing Agent
+Amendment: Added comprehensive API testing and documentation requirements
 -->
 
 # Marlin Marketing Agent Constitution
@@ -29,7 +29,7 @@ The content generation service MUST maintain high reliability and availability. 
 All marketing operations MUST be logged with structured logging including campaign context, content details, and performance outcomes. Marketing events, content generation attempts, and client interactions MUST be tracked with detailed analytics. This enables campaign optimization, performance monitoring, and marketing ROI analysis.
 
 ### V. Error Handling & Validation
-All marketing inputs MUST be validated with comprehensive error handling and consistent error responses. Content generation requests, campaign parameters, and client data MUST be validated before processing. The system MUST provide clear error messages and fallback content when generation fails. This ensures marketing operations continue smoothly even when individual components encounter issues.
+All marketing inputs MUST be validated with comprehensive error handling and consistent error responses. Content generation requests, campaign parameters, and client data MUST be validated before processing. The system MUST provide clear error messages and fallback content when generation fails. All API endpoints MUST return standardized error responses with appropriate HTTP status codes, error codes, and descriptive messages. This ensures marketing operations continue smoothly even when individual components encounter issues and provides consistent error handling across all client integrations.
 
 ## Security Requirements
 
@@ -53,8 +53,24 @@ Comprehensive test coverage MUST be maintained for all marketing functionality i
 ### Documentation Requirements
 All marketing APIs MUST be documented with comprehensive OpenAPI/Swagger specifications including examples and error responses. Postman collections MUST be maintained with test cases for all endpoints. Marketing workflows and campaign templates MUST be documented with clear usage instructions. All configuration options and environment variables MUST be documented. README files MUST provide clear setup and usage instructions for developers and users.
 
+## API Testing & Validation
+
+### Central Postman Collection (NON-NEGOTIABLE)
+There MUST be a central Postman collection that is always kept up to date with the current API implementation. This collection MUST include comprehensive test cases that can validate the server works correctly in deployed environments. The collection MUST be version-controlled and automatically updated with each API change. All test cases MUST cover both success and failure scenarios, including authentication, validation, and error handling. The collection MUST be executable in CI/CD pipelines and provide clear pass/fail results for deployment validation.
+
+### Automated API Testing
+All API endpoints MUST have corresponding Postman test cases that verify request/response formats, status codes, and data validation. Test cases MUST include authentication scenarios, rate limiting validation, and error response verification. The Postman collection MUST be configured to run against multiple environments (development, staging, production) with environment-specific variables. Test results MUST be integrated into the deployment pipeline to ensure API functionality before production releases.
+
+## Swagger Documentation Standards
+
+### Comprehensive API Documentation (NON-NEGOTIABLE)
+All marketing agent APIs MUST have extensive Swagger/OpenAPI documentation with quality examples covering all request/response scenarios. The documentation MUST include detailed descriptions for all endpoints, parameters, request bodies, and response schemas. Every API endpoint MUST have realistic example requests and responses that demonstrate proper usage patterns. The documentation MUST be automatically generated from code annotations and kept synchronized with the actual implementation.
+
+### Error Scenario Coverage
+The Swagger documentation MUST comprehensively cover all error scenarios including validation errors, authentication failures, rate limiting, service unavailability, and business logic errors. Each error response MUST include detailed descriptions, example error messages, and suggested remediation steps. Error response schemas MUST be consistent across all endpoints and include standardized error codes, messages, and additional context fields. The documentation MUST provide clear guidance on how clients should handle different error types and implement proper retry logic.
+
 ## Governance
 
 This constitution supersedes all other development practices. All pull requests and code reviews MUST verify compliance with these principles. Any violations of the core principles MUST be justified with clear reasoning. Use the project README.md for runtime development guidance and API documentation.
 
-**Version**: 1.0.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-27
+**Version**: 1.1.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-12

@@ -53,6 +53,20 @@
 - Health check endpoints MUST be updated if new services are added
 - API documentation MUST be updated for any new endpoints
 
+### API Testing & Validation
+
+- **Central Postman Collection**: All new API endpoints MUST be added to the central Postman collection with comprehensive test cases
+- **Automated Testing**: New endpoints MUST have corresponding Postman test cases covering success/failure scenarios, authentication, and validation
+- **Environment Testing**: Test cases MUST be configured to run against multiple environments (dev/staging/production)
+- **Deployment Validation**: Postman collection MUST be integrated into CI/CD pipeline for deployment validation
+
+### Swagger Documentation Standards
+
+- **Comprehensive Documentation**: All new API endpoints MUST have extensive Swagger/OpenAPI documentation with quality examples
+- **Error Scenario Coverage**: Documentation MUST cover all error scenarios including validation, authentication, rate limiting, and service errors
+- **Code Synchronization**: Documentation MUST be automatically generated from code annotations and kept synchronized
+- **Example Quality**: Every endpoint MUST have realistic example requests and responses demonstrating proper usage patterns
+
 ## Project Structure
 
 ### Documentation (this feature)
