@@ -55,12 +55,14 @@ app.get('/', (_req, res) => {
 // Error handling
 app.use(errorHandler);
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Marlin Marketing Agent server running on port ${PORT}`);
-  console.log(`Environment: ${serverConfig.nodeEnv}`);
-  console.log(`Health check: http://localhost:${PORT}/health`);
-  console.log(`Hello endpoint: http://localhost:${PORT}/hello`);
-});
+// Start server only if not in test mode
+if (process.env['NODE_ENV'] !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Marlin Marketing Agent server running on port ${PORT}`);
+    console.log(`Environment: ${serverConfig.nodeEnv}`);
+    console.log(`Health check: http://localhost:${PORT}/health`);
+    console.log(`Hello endpoint: http://localhost:${PORT}/hello`);
+  });
+}
 
 export default app;

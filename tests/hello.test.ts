@@ -1,16 +1,29 @@
-// Mock the LLM service before importing the app
-jest.mock('../src/services/llmService', () => ({
-  generateHelloWorldMessage: jest.fn().mockResolvedValue({
-    message:
-      "Welcome to Marlin Marketing Agent! Today is Monday, January 1, 2024 and the time is 12:00 PM. We're excited to help you with your marketing needs.",
-    tokensUsed: 45,
-  }),
-}));
-
+import nock from 'nock';
 import request from 'supertest';
 import app from '../src/index';
 
+// Mock OpenAI API calls
+const openaiScope = nock('https://api.openai.com')
+  .post('/v1/chat/completions')
+  .reply(200, {
+    choices: [
+      {
+        message: {
+          content:
+            "Welcome to Marlin Marketing Agent! Today is Monday, January 1, 2024 and the time is 12:00 PM. We're excited to help you with your marketing needs.",
+        },
+      },
+    ],
+    usage: {
+      total_tokens: 45,
+    },
+  });
+
 describe('Hello Endpoint Tests', () => {
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
   it('should generate hello world message successfully', async() => {
     const response = await request(app).get('/hello').expect(200);
 
@@ -23,12 +36,12 @@ describe('Hello Endpoint Tests', () => {
   });
 
   it('should handle LLM service errors gracefully', async() => {
-    // Mock the LLM service to throw an error
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { generateHelloWorldMessage } = require('../src/services/llmService');
-    generateHelloWorldMessage.mockRejectedValueOnce(new Error('LLM service unavailable'));
+    // Mock OpenAI API to return an error
+    nock('https://api.openai.com')
+      .post('/v1/chat/completions')
+      .reply(500, { error: { message: 'LLM service unavailable' } });
 
-    const response = await request(app).get('/hello').expect(500);
+    const response = await request(app).get('/hello').expect(502);
 
     expect(response.body).toHaveProperty('error');
   });
