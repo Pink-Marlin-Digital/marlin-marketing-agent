@@ -10,7 +10,7 @@ export interface HelloWorldResponse {
 export async function generateHelloWorldMessage(): Promise<HelloWorldResponse> {
   try {
     logInfo('Starting LLM hello world generation', {
-      model: openaiConfig.model
+      model: openaiConfig.model,
     });
 
     // Format the prompt with current time and date
@@ -22,15 +22,16 @@ export async function generateHelloWorldMessage(): Promise<HelloWorldResponse> {
       messages: [
         {
           role: 'system',
-          content: 'You are a friendly AI assistant for Marlin Marketing Agent. Generate warm, professional welcome messages.'
+          content:
+            'You are a friendly AI assistant for Marlin Marketing Agent. Generate warm, professional welcome messages.',
         },
         {
           role: 'user',
-          content: prompt
-        }
+          content: prompt,
+        },
       ],
       temperature: openaiConfig.temperature,
-      max_tokens: openaiConfig.maxTokens
+      max_tokens: openaiConfig.maxTokens,
     });
 
     // Parse the response
@@ -43,17 +44,16 @@ export async function generateHelloWorldMessage(): Promise<HelloWorldResponse> {
 
     logInfo('LLM hello world generation completed', {
       tokensUsed,
-      messageLength: content.length
+      messageLength: content.length,
     });
 
     return {
       message: content.trim(),
-      tokensUsed
+      tokensUsed,
     };
-
   } catch (error) {
     logError(error as Error, {
-      model: openaiConfig.model
+      model: openaiConfig.model,
     });
 
     if (error instanceof LLMError) {
@@ -69,6 +69,8 @@ export async function generateHelloWorldMessage(): Promise<HelloWorldResponse> {
       throw new LLMError('LLM rate limit exceeded');
     }
 
-    throw new LLMError(`LLM generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new LLMError(
+      `LLM generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+    );
   }
 }

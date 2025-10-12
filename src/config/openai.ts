@@ -31,18 +31,18 @@ Return the response as a simple text message (not JSON).`;
 
 export function formatHelloWorldPrompt(): string {
   const now = new Date();
-  const timeString = now.toLocaleTimeString('en-US', { 
-    hour: 'numeric', 
+  const timeString = now.toLocaleTimeString('en-US', {
+    hour: 'numeric',
     minute: '2-digit',
-    hour12: true 
+    hour12: true,
   });
-  const dayString = now.toLocaleDateString('en-US', { 
+  const dayString = now.toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   });
-  
+
   return `${helloWorldPrompt}
 
 Current time: ${timeString}

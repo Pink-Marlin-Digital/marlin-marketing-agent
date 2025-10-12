@@ -33,7 +33,7 @@ export const logWarn = (message: string, meta?: Record<string, unknown>): void =
 
 export const logger = (req: Request, res: Response, next: NextFunction): void => {
   const start = Date.now();
-  
+
   res.on('finish', () => {
     const duration = Date.now() - start;
     const logEntry = {
@@ -46,13 +46,13 @@ export const logger = (req: Request, res: Response, next: NextFunction): void =>
       userAgent: req.get('User-Agent'),
       ip: req.ip,
     };
-    
+
     if (res.statusCode >= 400) {
       logEntry.level = 'warn';
     }
-    
+
     console.log(JSON.stringify(logEntry));
   });
-  
+
   next();
 };
