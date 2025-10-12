@@ -31,7 +31,27 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+### Core Principle Compliance
+
+- **Marketing Automation Service**: Feature MUST maintain marketing automation capabilities and campaign management tools
+- **API Key Authentication**: All new endpoints MUST require API key authentication if they expose sensitive functionality
+- **Content Generation Reliability**: Any content generation features MUST maintain service reliability and health checks
+- **Comprehensive Logging & Analytics**: All new operations MUST include structured logging with marketing context and analytics
+- **Error Handling & Validation**: Input validation and error handling MUST be implemented for all new endpoints
+- **Marketing Tool Organization**: Every new marketing tool MUST have its own dedicated folder with tests and documentation
+
+### Security Requirements
+
+- CORS, rate limiting, and security headers MUST be considered for new endpoints
+- Environment variable management MUST be used for any new configuration
+- API key handling MUST follow established patterns
+
+### Development Workflow
+
+- Code MUST follow linting and formatting standards
+- Tests MUST be written for critical new functionality
+- Health check endpoints MUST be updated if new services are added
+- API documentation MUST be updated for any new endpoints
 
 ## Project Structure
 
