@@ -1,15 +1,15 @@
 <!--
 Sync Impact Report:
-Version change: 1.1.0 → 1.2.0
-Modified principles: Code Quality (expanded with linting requirements)
-Added sections: Code Quality & Linting Standards
+Version change: 1.2.0 → 1.3.0
+Modified principles: Testing Standards (expanded with nock mocking requirements)
+Added sections: HTTP Request Mocking Standards
 Removed sections: N/A
 Templates requiring updates: 
-  ✅ plan-template.md (updated for linting requirements)
-  ✅ spec-template.md (updated for code quality standards)
-  ✅ tasks-template.md (updated for linting task types)
+  ✅ plan-template.md (updated for testing requirements)
+  ✅ spec-template.md (updated for testing standards)
+  ✅ tasks-template.md (updated for testing task types)
 Follow-up TODOs: None
-Amendment: Added comprehensive linting and code quality enforcement requirements
+Amendment: Added comprehensive HTTP request mocking requirements using nock package
 -->
 
 # Marlin Marketing Agent Constitution
@@ -50,6 +50,9 @@ All code MUST pass ESLint validation with zero errors before any commit or deplo
 ### Testing Standards
 Comprehensive test coverage MUST be maintained for all marketing functionality including unit tests, integration tests, and end-to-end tests. All marketing campaigns, content generation, and client interactions MUST be tested with both success and failure scenarios. API mocking MUST be used to ensure tests don't make real external calls. Constitution compliance tests MUST verify all principles are properly implemented. Test data MUST be realistic and representative of actual marketing use cases.
 
+### HTTP Request Mocking Standards (NON-NEGOTIABLE)
+All tests MUST use the npm package `nock` to mock outbound HTTP requests to external services including OpenAI, email services, and other third-party APIs. Tests MUST NOT make real external API calls to prevent test failures due to service unavailability, rate limiting, or network issues. All mocked HTTP responses MUST be deterministic and consistent across test runs. The `nock` package MUST be configured to intercept all outbound requests during testing, ensuring tests produce consistent results regardless of external service availability. This prevents test errors such as "LLM service unavailable" and ensures reliable, fast test execution.
+
 ### Documentation Requirements
 All marketing APIs MUST be documented with comprehensive OpenAPI/Swagger specifications including examples and error responses. Postman collections MUST be maintained with test cases for all endpoints. Marketing workflows and campaign templates MUST be documented with clear usage instructions. All configuration options and environment variables MUST be documented. README files MUST provide clear setup and usage instructions for developers and users.
 
@@ -73,4 +76,4 @@ The Swagger documentation MUST comprehensively cover all error scenarios includi
 
 This constitution supersedes all other development practices. All pull requests and code reviews MUST verify compliance with these principles. Any violations of the core principles MUST be justified with clear reasoning. Use the project README.md for runtime development guidance and API documentation.
 
-**Version**: 1.2.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-12
+**Version**: 1.3.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-12
