@@ -1,15 +1,15 @@
 <!--
 Sync Impact Report:
-Version change: 1.0.0 → 1.1.0
-Modified principles: V. Error Handling & Validation (expanded), Documentation Requirements (expanded)
-Added sections: API Testing & Validation, Swagger Documentation Standards
+Version change: 1.1.0 → 1.2.0
+Modified principles: Code Quality (expanded with linting requirements)
+Added sections: Code Quality & Linting Standards
 Removed sections: N/A
 Templates requiring updates: 
-  ✅ plan-template.md (updated for API testing requirements)
-  ✅ spec-template.md (updated for documentation standards)
-  ✅ tasks-template.md (updated for testing and documentation task types)
+  ✅ plan-template.md (updated for linting requirements)
+  ✅ spec-template.md (updated for code quality standards)
+  ✅ tasks-template.md (updated for linting task types)
 Follow-up TODOs: None
-Amendment: Added comprehensive API testing and documentation requirements
+Amendment: Added comprehensive linting and code quality enforcement requirements
 -->
 
 # Marlin Marketing Agent Constitution
@@ -44,8 +44,8 @@ All API endpoints MUST implement proper CORS configuration, rate limiting, and i
 
 ## Development Workflow
 
-### Code Quality
-All code MUST follow established linting and formatting standards with automated enforcement. TypeScript MUST be used for type safety and better development experience. Code reviews MUST verify compliance with constitution principles and coding standards. All functions and classes MUST be properly documented with JSDoc comments. Code complexity MUST be kept manageable with clear separation of concerns between marketing logic, data handling, and external integrations.
+### Code Quality & Linting Standards (NON-NEGOTIABLE)
+All code MUST pass ESLint validation with zero errors before any commit or deployment. The project MUST maintain comprehensive ESLint configuration with TypeScript support, enforcing consistent code style, proper error handling, and security best practices. Prettier MUST be configured for automatic code formatting to ensure consistent style across the codebase. All linting rules MUST be enforced in CI/CD pipelines with build failures for any linting errors. Code reviews MUST verify linting compliance and all developers MUST run `npm run lint` and `npm run lint:fix` before submitting changes. The linting configuration MUST include rules for TypeScript best practices, security vulnerabilities, and consistent formatting standards.
 
 ### Testing Standards
 Comprehensive test coverage MUST be maintained for all marketing functionality including unit tests, integration tests, and end-to-end tests. All marketing campaigns, content generation, and client interactions MUST be tested with both success and failure scenarios. API mocking MUST be used to ensure tests don't make real external calls. Constitution compliance tests MUST verify all principles are properly implemented. Test data MUST be realistic and representative of actual marketing use cases.
@@ -73,4 +73,4 @@ The Swagger documentation MUST comprehensively cover all error scenarios includi
 
 This constitution supersedes all other development practices. All pull requests and code reviews MUST verify compliance with these principles. Any violations of the core principles MUST be justified with clear reasoning. Use the project README.md for runtime development guidance and API documentation.
 
-**Version**: 1.1.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-12
+**Version**: 1.2.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-12
