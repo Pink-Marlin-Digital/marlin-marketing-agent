@@ -2,8 +2,8 @@ import nock from 'nock';
 import request from 'supertest';
 import app from '../src/index';
 
-// Mock OpenAI API calls
-const openaiScope = nock('https://api.openai.com')
+// Mock OpenAI API calls for successful responses
+nock('https://api.openai.com')
   .post('/v1/chat/completions')
   .reply(200, {
     choices: [
