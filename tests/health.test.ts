@@ -50,16 +50,11 @@ describe('Health Check Tests', () => {
     });
   });
 
-<<<<<<< HEAD
-  it('should return API information on root endpoint', async() => {
-    const response = await request(app).get('/').expect(200);
-=======
   describe('Integration Tests', () => {
     it('should include AI service status monitoring', async () => {
       const response = await request(app)
         .get('/health')
         .expect(200);
->>>>>>> 9b842f1 (Refactor Marlin Marketing Agent Constitution and server code to enhance clarity and compliance. Updated core principles to focus on basic agent functionality, improved error handling, and logging practices. Modified server startup logic to prevent execution in test mode. Expanded health and hello endpoint tests to include contract and integration scenarios, ensuring robust response validation and error handling.)
 
       // The health endpoint should include AI service status
       // This will be enhanced when we add AI service monitoring

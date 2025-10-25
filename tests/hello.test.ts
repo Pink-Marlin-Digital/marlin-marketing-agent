@@ -3,6 +3,7 @@ const mockGenerateHelloWorldMessage = jest.fn();
 jest.mock('../src/services/llmService', () => ({
   generateHelloWorldMessage: mockGenerateHelloWorldMessage
 }));
+
 import request from 'supertest';
 import app from '../src/index';
 
@@ -21,38 +22,6 @@ describe('Hello Endpoint Tests', () => {
       const response = await request(app)
         .get('/hello')
         .expect(200);
-
-    expect(response.body).toHaveProperty('message');
-    expect(response.body).toHaveProperty('metadata');
-    expect(response.body.metadata).toHaveProperty('processingTime');
-    expect(response.body.metadata).toHaveProperty('tokensUsed', 45);
-    expect(response.body.metadata).toHaveProperty('timestamp');
-    expect(typeof response.body.metadata.processingTime).toBe('number');
-  });
-
-  it('should handle LLM service errors gracefully', async() => {
-    // Mock OpenAI API to return an error
-    nock('https://api.openai.com')
-      .post('/v1/chat/completions')
-      .reply(500, { error: { message: 'LLM service unavailable' } });
-
-    const response = await request(app).get('/hello').expect(502);
-=======
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  describe('Contract Tests', () => {
-    it('should generate hello world message successfully', async () => {
-      mockGenerateHelloWorldMessage.mockResolvedValue({
-        message: 'Welcome to Marlin Marketing Agent! Today is Monday, January 1, 2024 and the time is 12:00 PM. We\'re excited to help you with your marketing needs.',
-        tokensUsed: 45
-      });
-
-      const response = await request(app)
-        .get('/hello')
-        .expect(200);
->>>>>>> 9b842f1 (Refactor Marlin Marketing Agent Constitution and server code to enhance clarity and compliance. Updated core principles to focus on basic agent functionality, improved error handling, and logging practices. Modified server startup logic to prevent execution in test mode. Expanded health and hello endpoint tests to include contract and integration scenarios, ensuring robust response validation and error handling.)
 
       expect(response.body).toHaveProperty('message');
       expect(response.body).toHaveProperty('metadata');
