@@ -23,6 +23,8 @@ pids
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
+.env.staging
 
 # IDE
 .vscode/
@@ -34,7 +36,11 @@ Thumbs.db
 
 # Git
 .git/
+.github/
 
 # Package manager
 package-lock.json
 yarn.lock
+
+# Documentation
+*.md

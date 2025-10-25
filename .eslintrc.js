@@ -7,6 +7,7 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   extends: [
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   root: true,
   env: {
@@ -18,14 +19,14 @@ module.exports = {
   rules: {
     // TypeScript specific rules
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/no-non-null-assertion': 'warn',
     '@typescript-eslint/no-var-requires': 'error',
     
     // General ESLint rules
-    'no-console': 'warn',
+    'no-console': 'off', // Allow console for structured logging
     'no-debugger': 'error',
     'no-duplicate-imports': 'error',
     'no-unused-vars': 'off', // Use TypeScript version instead

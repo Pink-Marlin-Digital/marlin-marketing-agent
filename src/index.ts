@@ -56,7 +56,7 @@ app.get('/', (_req, res) => {
 app.use(errorHandler);
 
 // Start server only if not in test mode
-if (process.env['NODE_ENV'] !== 'test') {
+if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
     console.log(`Marlin Marketing Agent server running on port ${PORT}`);
     console.log(`Environment: ${serverConfig.nodeEnv}`);

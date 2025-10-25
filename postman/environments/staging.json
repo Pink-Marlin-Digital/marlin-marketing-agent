@@ -1,0 +1,22 @@
+{
+  "id": "staging",
+  "name": "Staging",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "https://marlin-marketing-agent-staging.herokuapp.com",
+      "enabled": true
+    },
+    {
+      "key": "api_key",
+      "value": "staging-api-key-456",
+      "enabled": true
+    },
+    {
+      "key": "environment",
+      "value": "staging",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

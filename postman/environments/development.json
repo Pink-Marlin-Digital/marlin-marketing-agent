@@ -1,0 +1,22 @@
+{
+  "id": "development",
+  "name": "Development",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "enabled": true
+    },
+    {
+      "key": "api_key",
+      "value": "dev-api-key-123",
+      "enabled": true
+    },
+    {
+      "key": "environment",
+      "value": "development",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

@@ -1,7 +1,7 @@
-import rateLimit from 'express-rate-limit';
+import rateLimit, { RateLimitRequestHandler } from 'express-rate-limit';
 import { serverConfig } from '../config/server';
 
-export const createRateLimit = () => {
+export const createRateLimit = (): RateLimitRequestHandler => {
   return rateLimit({
     windowMs: serverConfig.rateLimit.windowMs,
     max: serverConfig.rateLimit.maxRequests,
