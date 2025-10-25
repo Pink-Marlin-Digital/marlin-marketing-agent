@@ -3,7 +3,7 @@ import app from '../src/index';
 
 describe('Health Check Tests', () => {
   describe('Contract Tests', () => {
-    it('should return health status with all required fields', async () => {
+    it('should return health status with all required fields', async() => {
       const response = await request(app)
         .get('/health')
         .expect(200);
@@ -13,19 +13,19 @@ describe('Health Check Tests', () => {
       expect(response.body).toHaveProperty('version');
       expect(response.body).toHaveProperty('uptime');
       expect(response.body).toHaveProperty('environment');
-      
+
       // Validate status is one of the expected values
       expect(['healthy', 'degraded', 'unhealthy']).toContain(response.body.status);
-      
+
       // Validate timestamp is ISO string
       expect(new Date(response.body.timestamp)).toBeInstanceOf(Date);
-      
+
       // Validate uptime is a number
       expect(typeof response.body.uptime).toBe('number');
       expect(response.body.uptime).toBeGreaterThanOrEqual(0);
     });
 
-    it('should respond within 100ms for 99% of requests', async () => {
+    it('should respond within 100ms for 99% of requests', async() => {
       const startTime = Date.now();
       const response = await request(app)
         .get('/health')
@@ -36,7 +36,7 @@ describe('Health Check Tests', () => {
       expect(response.body).toHaveProperty('status');
     });
 
-    it('should return API information on root endpoint', async () => {
+    it('should return API information on root endpoint', async() => {
       const response = await request(app)
         .get('/')
         .expect(200);
@@ -51,7 +51,7 @@ describe('Health Check Tests', () => {
   });
 
   describe('Integration Tests', () => {
-    it('should include AI service status monitoring', async () => {
+    it('should include AI service status monitoring', async() => {
       const response = await request(app)
         .get('/health')
         .expect(200);
@@ -62,16 +62,16 @@ describe('Health Check Tests', () => {
       expect(response.body).toHaveProperty('timestamp');
     });
 
-    it('should handle health check logging', async () => {
+    it('should handle health check logging', async() => {
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-      
+
       await request(app)
         .get('/health')
         .expect(200);
 
       // Should log the health check request
       expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('GET')
+        expect.stringContaining('GET'),
       );
 
       consoleSpy.mockRestore();
