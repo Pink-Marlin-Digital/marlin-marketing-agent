@@ -1,0 +1,22 @@
+{
+  "id": "production",
+  "name": "Production",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "https://marlin-marketing-agent.herokuapp.com",
+      "enabled": true
+    },
+    {
+      "key": "api_key",
+      "value": "production-api-key-789",
+      "enabled": true
+    },
+    {
+      "key": "environment",
+      "value": "production",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

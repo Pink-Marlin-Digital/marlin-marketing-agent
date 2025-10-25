@@ -1,0 +1,254 @@
+openapi: 3.0.3
+info:
+  title: Marlin Marketing Agent API
+  description: AI-powered marketing automation service with content generation capabilities
+  version: 1.0.0
+  contact:
+    name: Marlin Marketing Team
+    email: support@marlinmarketing.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://marlin-marketing-agent.herokuapp.com
+    description: Production server
+  - url: https://marlin-marketing-agent-staging.herokuapp.com
+    description: Staging server
+  - url: http://localhost:3000
+    description: Development server
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /hello:
+    get:
+      summary: Get AI-generated welcome message
+      description: Returns an AI-generated welcome message including current time and day information
+      operationId: getHello
+      tags:
+        - Marketing
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response with AI-generated message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelloResponse'
+              examples:
+                success:
+                  summary: Successful AI response
+                  value:
+                    message: "Hello! Welcome to Marlin Marketing Agent. Today is Thursday, December 19th, 2024, and the current time is 2:35 PM. I'm here to help you with your marketing automation needs!"
+                    timestamp: "2024-12-19T14:35:00.000Z"
+                    model: "gpt-3.5-turbo"
+        '401':
+          description: Unauthorized - Invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                unauthorized:
+                  summary: Missing API key
+                  value:
+                    error: "Unauthorized"
+                    message: "API key is required"
+                    code: 401
+                    timestamp: "2024-12-19T14:35:00.000Z"
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                rate_limited:
+                  summary: Rate limit exceeded
+                  value:
+                    error: "RateLimitExceeded"
+                    message: "Too many requests. Please try again later."
+                    code: 429
+                    timestamp: "2024-12-19T14:35:00.000Z"
+        '500':
+          description: Internal Server Error - AI service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                ai_service_error:
+                  summary: AI service unavailable
+                  value:
+                    error: "AIServiceUnavailable"
+                    message: "AI service is currently unavailable. Please try again later."
+                    code: 500
+                    timestamp: "2024-12-19T14:35:00.000Z"
+                    details:
+                      retry_after: 30
+
+  /health:
+    get:
+      summary: Get server health status
+      description: Returns the current health status of the server and AI service
+      operationId: getHealth
+      tags:
+        - Monitoring
+      responses:
+        '200':
+          description: Health status information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              examples:
+                healthy:
+                  summary: Server is healthy
+                  value:
+                    status: "healthy"
+                    timestamp: "2024-12-19T14:35:00.000Z"
+                    version: "1.0.0"
+                    uptime: 3600
+                    ai_service:
+                      available: true
+                      response_time: 1250
+                      last_check: "2024-12-19T14:35:00.000Z"
+                degraded:
+                  summary: Server is degraded
+                  value:
+                    status: "degraded"
+                    timestamp: "2024-12-19T14:35:00.000Z"
+                    version: "1.0.0"
+                    uptime: 3600
+                    ai_service:
+                      available: false
+                      last_check: "2024-12-19T14:35:00.000Z"
+        '503':
+          description: Service Unavailable - Server is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                unhealthy:
+                  summary: Server is unhealthy
+                  value:
+                    error: "ServiceUnavailable"
+                    message: "Server is currently unhealthy"
+                    code: 503
+                    timestamp: "2024-12-19T14:35:00.000Z"
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for authentication
+
+  schemas:
+    HelloResponse:
+      type: object
+      required:
+        - message
+        - timestamp
+      properties:
+        message:
+          type: string
+          description: AI-generated welcome message including current time and day
+          example: "Hello! Welcome to Marlin Marketing Agent. Today is Thursday, December 19th, 2024, and the current time is 2:35 PM. I'm here to help you with your marketing automation needs!"
+        timestamp:
+          type: string
+          format: date-time
+          description: Response generation timestamp
+          example: "2024-12-19T14:35:00.000Z"
+        model:
+          type: string
+          description: AI model used for generation
+          example: "gpt-3.5-turbo"
+
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - version
+        - uptime
+        - ai_service
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+          description: Overall server health status
+          example: "healthy"
+        timestamp:
+          type: string
+          format: date-time
+          description: Health check timestamp
+          example: "2024-12-19T14:35:00.000Z"
+        version:
+          type: string
+          description: Application version
+          example: "1.0.0"
+        uptime:
+          type: number
+          description: Server uptime in seconds
+          example: 3600
+        ai_service:
+          type: object
+          required:
+            - available
+          properties:
+            available:
+              type: boolean
+              description: Whether AI service is available
+              example: true
+            response_time:
+              type: number
+              description: AI service response time in milliseconds
+              example: 1250
+            last_check:
+              type: string
+              format: date-time
+              description: Last AI service check timestamp
+              example: "2024-12-19T14:35:00.000Z"
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+        - code
+        - timestamp
+      properties:
+        error:
+          type: string
+          description: Error type identifier
+          example: "AIServiceUnavailable"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "AI service is currently unavailable. Please try again later."
+        code:
+          type: integer
+          description: HTTP status code
+          example: 500
+        timestamp:
+          type: string
+          format: date-time
+          description: Error timestamp
+          example: "2024-12-19T14:35:00.000Z"
+        details:
+          type: object
+          description: Additional error context
+          example:
+            retry_after: 30
+
+tags:
+  - name: Marketing
+    description: Marketing automation endpoints
+  - name: Monitoring
+    description: Server health and monitoring endpoints
