@@ -1,0 +1,133 @@
+openapi: 3.0.3
+info:
+  title: Social Posting Service API
+  version: 1.0.0
+  description: API to post content to Facebook and Instagram with multi-channel support and idempotency.
+servers:
+  - url: http://localhost:3000
+security:
+  - ApiKeyAuth: []
+paths:
+  /api/social/posts:
+    post:
+      summary: Create a social post across channels
+      operationId: createSocialPost
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequest'
+            examples:
+              multiChannel:
+                value:
+                  text: "New product drop!"
+                  mediaUrls: ["https://example.com/image.jpg"]
+                  channels: ["FACEBOOK", "INSTAGRAM"]
+                  idempotencyKey: "abcd-1234"
+      responses:
+        '200':
+          description: Per-channel results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized (missing/invalid API key)
+        '429':
+          description: Rate limited by platform or service
+  /api/social/posts/status:
+    get:
+      summary: Get post results by idempotency key
+      operationId: getPostStatus
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: query
+          name: idempotencyKey
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Previously created post results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+        '404':
+          description: Not found for provided idempotency key
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  schemas:
+    Channel:
+      type: string
+      enum: [FACEBOOK, INSTAGRAM]
+    ChannelResult:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/Channel'
+        status:
+          type: string
+          enum: [success, failed]
+        externalId:
+          type: string
+        errorCode:
+          type: string
+        errorMessage:
+          type: string
+      required: [channel, status]
+    PostRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Required if mediaUrls not provided
+        mediaUrls:
+          type: array
+          items:
+            type: string
+            format: uri
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Channel'
+          description: Optional; defaults from configuration when omitted
+        idempotencyKey:
+          type: string
+      required: []
+    PostResponse:
+      type: object
+      properties:
+        overallStatus:
+          type: string
+          enum: [success, partial_success, failed]
+        results:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ChannelResult'
+        correlationId:
+          type: string
+      required: [overallStatus, results]
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: array
+          items:
+            type: string

@@ -1,0 +1,50 @@
+{
+  "info": {
+    "name": "Social Posting Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Social Post",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-API-Key", "value": "{{API_KEY}}" }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/social/posts",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "social", "posts"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"New product drop!\",\n  \"mediaUrls\": [\"https://example.com/image.jpg\"],\n  \"channels\": [\"FACEBOOK\", \"INSTAGRAM\"],\n  \"idempotencyKey\": \"abcd-1234\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Post Status",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "X-API-Key", "value": "{{API_KEY}}" }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/social/posts/status?idempotencyKey=abcd-1234",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "social", "posts", "status"],
+          "query": [
+            { "key": "idempotencyKey", "value": "abcd-1234" }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    { "key": "BASE_URL", "value": "http://localhost:3000" },
+    { "key": "API_KEY", "value": "changeme" }
+  ]
+}

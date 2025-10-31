@@ -1,0 +1,24 @@
+# marlin-marketing-agent Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2025-10-31
+
+## Active Technologies
+- Node.js (LTS) with TypeScrip + Express (API), zod (validation), node-fetch/axios (HTTP), swagger-jsdoc/openapi, winston/pino (logging) (003-create-a-service)
+
+## Project Structure
+```
+src/
+tests/
+```
+
+## Commands
+# Add commands for Node.js (LTS) with TypeScrip
+
+## Code Style
+Node.js (LTS) with TypeScrip: Follow standard conventions
+
+## Recent Changes
+- 003-create-a-service: Added Node.js (LTS) with TypeScrip + Express (API), zod (validation), node-fetch/axios (HTTP), swagger-jsdoc/openapi, winston/pino (logging)
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->
